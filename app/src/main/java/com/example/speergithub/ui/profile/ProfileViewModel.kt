@@ -14,13 +14,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
-    val loadingLiveData = MutableLiveData<Status>()
-    val userLiveData = MutableLiveData<User>()
+    val loadingLiveData = MutableLiveData<Status>() // For updating the UI State
+    val userLiveData = MutableLiveData<User>() // For updating the data
 
+    /*
+    * Setting user directly if it is available
+    * */
     fun setUser(user: User) {
         userLiveData.value = user
     }
 
+    /*
+    * Function to retrieve the profile details
+    * */
     fun getProfile(username: String) {
         loadingLiveData.postValue(Status.LOADING)
         viewModelScope.launch(Dispatchers.IO) {

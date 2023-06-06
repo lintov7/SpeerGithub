@@ -11,11 +11,14 @@ import com.example.speergithub.repository.models.User
 import dagger.hilt.android.scopes.FragmentScoped
 import javax.inject.Inject
 
+/*
+* Recyclerview adapter for showing the list of users
+* */
 class FollowersAdapter @Inject constructor(): RecyclerView.Adapter<ViewHolder>() {
     private val VIEW_TYPE_ITEM = 0
     private val VIEW_TYPE_LOADING = 1
 
-    var onItemClick: ((User) -> Unit)? = null
+    var onItemClick: ((User) -> Unit)? = null // Callback for item click
     val userList: ArrayList<User?> = arrayListOf()
 
     override fun getItemViewType(position: Int): Int {
@@ -44,17 +47,26 @@ class FollowersAdapter @Inject constructor(): RecyclerView.Adapter<ViewHolder>()
         }
     }
 
+    /*
+    * Function to append new data to the list
+    * */
     fun addNewData(users:List<User?>){
         val initialPosition = userList.size
         userList.addAll(users)
         notifyItemRangeInserted(initialPosition, users.size)
     }
 
+    /*
+    * Function to add null value to the list which will show a loading view
+    * */
     fun showLoading(){
         userList.add(null)
         notifyItemInserted(userList.size -1)
     }
 
+    /*
+    * Function to hide the loading view, by removing the null value
+    * */
     fun hideLoading(){
         if(userList.size> 0 && userList.last() == null){
             userList.removeAt(userList.size - 1)
@@ -62,6 +74,9 @@ class FollowersAdapter @Inject constructor(): RecyclerView.Adapter<ViewHolder>()
         }
     }
 
+    /*
+    * Clear all the data in the adapter
+    * */
     fun clearData(){
         userList.clear()
         notifyDataSetChanged()
@@ -70,7 +85,9 @@ class FollowersAdapter @Inject constructor(): RecyclerView.Adapter<ViewHolder>()
 
 }
 
-
+/*
+* User view holder
+* */
 class FollowersViewHolder(val binding: FollowerItemBinding, private val onItemClick: (Int) -> Unit) : ViewHolder(binding.root){
     init {
         binding.cvFollower.setOnClickListener {
@@ -88,6 +105,9 @@ class FollowersViewHolder(val binding: FollowerItemBinding, private val onItemCl
 }
 
 
+/*
+* Loading View holder
+* */
 class LoadingViewHolder(binding: LoadingItemBinding) : ViewHolder(binding.root){
 
 }

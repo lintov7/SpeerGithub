@@ -26,6 +26,9 @@ class FollowersViewModel @Inject constructor(private val repository: Repository)
     private var username: String = ""
     private var type: String = ""
 
+    /*
+    * Function to initialize all the variables on first starting
+    * */
     fun initialize(username: String, type: String) {
         this.username = username
         this.type = type
@@ -33,6 +36,9 @@ class FollowersViewModel @Inject constructor(private val repository: Repository)
         loadUsers()
     }
 
+    /*
+    * Function to load users
+    * */
     private fun loadUsers() {
         loadingLiveData.value = Status.LOADING
         viewModelScope.launch(Dispatchers.IO) {
@@ -61,6 +67,9 @@ class FollowersViewModel @Inject constructor(private val repository: Repository)
         }
     }
 
+    /*
+    * Function to load next page
+    * */
     fun goToNextPage() {
         if (!isLastPage) {
             page++
@@ -68,6 +77,9 @@ class FollowersViewModel @Inject constructor(private val repository: Repository)
         }
     }
 
+    /*
+    * Function to load page from beginning
+    * */
     fun reset() {
         users.clear()
         page = 1

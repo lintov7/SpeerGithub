@@ -16,9 +16,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(private val repository: Repository): ViewModel() {
-    val loadingLiveData = MutableLiveData<Status>()
-    val userLiveData = MutableLiveData<Event<User>>()
+    val loadingLiveData = MutableLiveData<Status>() // For updating the UI State
+    val userLiveData = MutableLiveData<Event<User>>() // For updating the data
 
+    /*
+    * This function will try to retrieve the user with the given username
+    * */
     fun searchUsers(username:String){
         loadingLiveData.postValue(Status.LOADING)
         viewModelScope.launch(Dispatchers.IO) {
